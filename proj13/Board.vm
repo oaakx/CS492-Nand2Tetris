@@ -1,0 +1,765 @@
+function Board.new 0
+push constant 1
+call Memory.alloc 1
+pop pointer 0
+push constant 16
+call Array.new 1
+pop this 0
+push pointer 0
+return
+function Board.draw 1
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+call Screen.clearScreen 0
+pop temp 0
+label WHILE_EXP0
+push local 0
+push constant 16
+lt
+not
+if-goto WHILE_END0
+push pointer 0
+push local 0
+call Board.drawField 2
+pop temp 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Board.drawField 2
+push argument 0
+pop pointer 0
+push argument 1
+push constant 4
+call Math.divide 2
+pop local 1
+push argument 1
+push constant 4
+push local 1
+call Math.multiply 2
+sub
+pop local 0
+push argument 1
+push this 0
+add
+pop pointer 1
+push that 0
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push local 0
+push constant 64
+call Math.multiply 2
+push constant 128
+add
+push constant 0
+add
+push local 1
+push constant 64
+call Math.multiply 2
+push constant 0
+add
+push local 0
+push constant 64
+call Math.multiply 2
+push constant 128
+add
+push constant 60
+add
+push constant 0
+sub
+push local 1
+push constant 64
+call Math.multiply 2
+push constant 60
+add
+push constant 0
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push local 0
+push constant 64
+call Math.multiply 2
+push constant 128
+add
+push constant 1
+add
+push local 1
+push constant 64
+call Math.multiply 2
+push constant 1
+add
+push local 0
+push constant 64
+call Math.multiply 2
+push constant 128
+add
+push constant 60
+add
+push constant 1
+sub
+push local 1
+push constant 64
+call Math.multiply 2
+push constant 60
+add
+push constant 1
+sub
+call Screen.drawRectangle 4
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push local 0
+push constant 64
+call Math.multiply 2
+push constant 128
+add
+push constant 0
+add
+push local 1
+push constant 64
+call Math.multiply 2
+push constant 0
+add
+push local 0
+push constant 64
+call Math.multiply 2
+push constant 128
+add
+push constant 60
+add
+push constant 0
+sub
+push local 1
+push constant 64
+call Math.multiply 2
+push constant 60
+add
+push constant 0
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push local 0
+push constant 64
+call Math.multiply 2
+push constant 128
+add
+push constant 3
+add
+push local 1
+push constant 64
+call Math.multiply 2
+push constant 3
+add
+push local 0
+push constant 64
+call Math.multiply 2
+push constant 128
+add
+push constant 60
+add
+push constant 3
+sub
+push local 1
+push constant 64
+call Math.multiply 2
+push constant 60
+add
+push constant 3
+sub
+call Screen.drawRectangle 4
+pop temp 0
+push local 1
+push constant 6
+call Math.multiply 2
+push constant 2
+add
+push constant 8
+push local 0
+call Math.multiply 2
+push constant 20
+add
+call Output.moveCursor 2
+pop temp 0
+push argument 1
+push this 0
+add
+pop pointer 1
+push that 0
+call Output.printInt 1
+pop temp 0
+label IF_END0
+push constant 0
+return
+function Board.insert 4
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 0
+push constant 16
+lt
+not
+if-goto WHILE_END0
+push local 0
+push this 0
+add
+pop pointer 1
+push that 0
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 1
+push constant 1
+add
+pop local 1
+label IF_FALSE0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push local 1
+push constant 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+return
+label IF_FALSE1
+push constant 1
+push constant 10
+call LCGRandom.randRange 2
+pop local 2
+push local 2
+push constant 10
+lt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 2
+pop local 3
+goto IF_END2
+label IF_FALSE2
+push constant 4
+pop local 3
+label IF_END2
+push constant 0
+push local 1
+push constant 1
+sub
+call LCGRandom.randRange 2
+pop local 2
+push constant 0
+pop local 1
+push constant 0
+pop local 0
+label WHILE_EXP1
+push local 0
+push constant 16
+lt
+not
+if-goto WHILE_END1
+push local 0
+push this 0
+add
+pop pointer 1
+push that 0
+push constant 0
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push local 1
+push local 2
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push local 0
+push this 0
+add
+push local 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+label IF_FALSE4
+push local 1
+push constant 1
+add
+pop local 1
+label IF_FALSE3
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP1
+label WHILE_END1
+push constant 0
+not
+return
+function Board.pushLeft 5
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 1
+push constant 4
+lt
+not
+if-goto WHILE_END0
+push constant 0
+pop local 2
+push constant 0
+pop local 3
+push constant 0
+pop local 4
+label WHILE_EXP1
+push local 2
+push constant 4
+lt
+not
+if-goto WHILE_END1
+label WHILE_EXP2
+push local 2
+push constant 4
+lt
+push constant 4
+push local 1
+call Math.multiply 2
+push local 2
+add
+push this 0
+add
+pop pointer 1
+push that 0
+push constant 0
+eq
+and
+not
+if-goto WHILE_END2
+push local 2
+push constant 1
+add
+pop local 2
+goto WHILE_EXP2
+label WHILE_END2
+push local 2
+push constant 4
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 4
+push local 1
+call Math.multiply 2
+push local 3
+add
+push this 0
+add
+push constant 4
+push local 1
+call Math.multiply 2
+push local 2
+add
+push this 0
+add
+pop pointer 1
+push that 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 4
+not
+push local 3
+push constant 0
+gt
+and
+push constant 4
+push local 1
+call Math.multiply 2
+push local 3
+add
+push constant 1
+sub
+push this 0
+add
+pop pointer 1
+push that 0
+push constant 4
+push local 1
+call Math.multiply 2
+push local 3
+add
+push this 0
+add
+pop pointer 1
+push that 0
+eq
+and
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+not
+pop local 4
+push local 0
+push constant 4
+push local 1
+call Math.multiply 2
+push local 3
+add
+push constant 1
+sub
+push this 0
+add
+pop pointer 1
+push that 0
+add
+push constant 4
+push local 1
+call Math.multiply 2
+push local 3
+add
+push this 0
+add
+pop pointer 1
+push that 0
+add
+pop local 0
+push constant 4
+push local 1
+call Math.multiply 2
+push local 3
+add
+push constant 1
+sub
+push this 0
+add
+push constant 4
+push local 1
+call Math.multiply 2
+push local 3
+add
+push constant 1
+sub
+push this 0
+add
+pop pointer 1
+push that 0
+push constant 4
+push local 1
+call Math.multiply 2
+push local 3
+add
+push this 0
+add
+pop pointer 1
+push that 0
+add
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+goto IF_END1
+label IF_FALSE1
+push constant 0
+pop local 4
+push local 3
+push constant 1
+add
+pop local 3
+label IF_END1
+label IF_FALSE0
+push local 2
+push constant 1
+add
+pop local 2
+goto WHILE_EXP1
+label WHILE_END1
+label WHILE_EXP3
+push local 3
+push constant 4
+lt
+not
+if-goto WHILE_END3
+push constant 4
+push local 1
+call Math.multiply 2
+push local 3
+add
+push this 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 3
+push constant 1
+add
+pop local 3
+goto WHILE_EXP3
+label WHILE_END3
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+push local 0
+return
+function Board.pushUp 1
+push argument 0
+pop pointer 0
+push pointer 0
+call Board.transpose 1
+pop temp 0
+push pointer 0
+call Board.pushLeft 1
+pop local 0
+push pointer 0
+call Board.transpose 1
+pop temp 0
+push local 0
+return
+function Board.pushDown 1
+push argument 0
+pop pointer 0
+push pointer 0
+call Board.transpose 1
+pop temp 0
+push pointer 0
+call Board.mirror 1
+pop temp 0
+push pointer 0
+call Board.pushLeft 1
+pop local 0
+push pointer 0
+call Board.mirror 1
+pop temp 0
+push pointer 0
+call Board.transpose 1
+pop temp 0
+push local 0
+return
+function Board.pushRight 1
+push argument 0
+pop pointer 0
+push pointer 0
+call Board.mirror 1
+pop temp 0
+push pointer 0
+call Board.pushLeft 1
+pop local 0
+push pointer 0
+call Board.mirror 1
+pop temp 0
+push local 0
+return
+function Board.transpose 4
+push argument 0
+pop pointer 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 1
+push constant 4
+lt
+not
+if-goto WHILE_END0
+push constant 0
+pop local 2
+label WHILE_EXP1
+push local 2
+push constant 4
+lt
+not
+if-goto WHILE_END1
+push local 1
+push local 2
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 1
+push constant 4
+call Math.multiply 2
+push local 2
+add
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 3
+push local 1
+push constant 4
+call Math.multiply 2
+push local 2
+add
+push this 0
+add
+push local 2
+push constant 4
+call Math.multiply 2
+push local 1
+add
+push this 0
+add
+pop pointer 1
+push that 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 2
+push constant 4
+call Math.multiply 2
+push local 1
+add
+push this 0
+add
+push local 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+label IF_FALSE0
+push local 2
+push constant 1
+add
+pop local 2
+goto WHILE_EXP1
+label WHILE_END1
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Board.mirror 3
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 4
+lt
+not
+if-goto WHILE_END0
+push constant 0
+pop local 1
+label WHILE_EXP1
+push local 1
+push constant 4
+lt
+not
+if-goto WHILE_END1
+push local 1
+push constant 2
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+push constant 4
+call Math.multiply 2
+push local 1
+add
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 2
+push local 0
+push constant 4
+call Math.multiply 2
+push local 1
+add
+push this 0
+add
+push local 0
+push constant 4
+call Math.multiply 2
+push constant 4
+push constant 1
+sub
+push local 1
+sub
+add
+push this 0
+add
+pop pointer 1
+push that 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 4
+call Math.multiply 2
+push constant 4
+push constant 1
+sub
+push local 1
+sub
+add
+push this 0
+add
+push local 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+label IF_FALSE0
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return

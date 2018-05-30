@@ -1,0 +1,15 @@
+// class Utils
+// function int Utils.mod
+function Utils.mod 2
+push argument 0 // a
+push argument 1 // b
+call Math.divide 2
+pop local 0 // d
+push argument 0 // a
+push argument 1 // b
+push local 0 // d
+call Math.multiply 2
+sub
+pop local 1 // r
+push local 1 // r
+return

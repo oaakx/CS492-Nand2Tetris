@@ -1,0 +1,72 @@
+//
+// Main function to test your Pattern functions
+//
+function Main.main 0
+
+push constant 50
+push constant 80
+push constant 10
+call Pattern.lines 3
+push constant 140
+push constant 200
+push constant 20
+call Pattern.lines 3
+call Main.wait 0
+push constant 0
+push constant 128
+push constant 3
+call Pattern.lines 3
+call Main.wait 0
+
+push constant 256
+push constant 128
+push constant 3
+call Pattern.lines 3
+call Main.wait 0
+
+push constant 256
+push constant 128
+push constant 50
+push constant 6
+call Pattern.disk 4
+call Main.wait 0
+push constant 256
+push constant 128
+push constant 100
+push constant 10
+call Pattern.disk 4
+push constant 100
+push constant 64
+push constant 60
+push constant 4
+call Pattern.disk 4
+push constant 100
+push constant 192
+push constant 60
+push constant 8
+call Pattern.disk 4
+push constant 412
+push constant 192
+push constant 60
+push constant 12
+call Pattern.disk 4
+push constant 412
+push constant 64
+push constant 60
+push constant 20
+call Pattern.disk 4
+call Main.wait 0
+return
+function Main.wait 0
+label wait-key
+call Keyboard.keyPressed 0
+push constant 0
+eq
+if-goto wait-key
+call Screen.clearScreen 0
+label wait-nokey
+call Keyboard.keyPressed 0
+push constant 0
+gt
+if-goto wait-key
+return

@@ -1,0 +1,210 @@
+// -*- java -*-
+// Warning: there is a snake slythering somewhere in the code!
+
+class Board {
+  field Array a;
+
+  constructor Board new() {
+    let a = Array.new(16);
+    return this;
+  }
+
+  // draw the board on the screen
+  method void draw() {
+    var int i;
+    let i = 0;
+    do Screen.clearScreen();
+    while (i < 16) {
+      do drawField(i);
+      let i = i + 1;
+    }
+    return;
+  }
+
+  method void drawField(int i) {
+    var int x, y;
+    let y = i / 4;
+    let x = i - (4*y);
+    
+    if (a[i] = 0) {
+      do Screen.setColor(true);
+      do Screen.drawRectangle(x*64 + 128 + 0, y*64 + 0, x*64 + 128 + 60 - 0, y * 64 + 60 + 0);
+      do Screen.setColor(false);
+      do Screen.drawRectangle(x*64 + 128 + 1, y*64 + 1, x*64 + 128 + 60 - 1, y * 64 + 60 - 1);
+    } else {
+      do Screen.setColor(true);
+      do Screen.drawRectangle(x*64 + 128 + 0, y*64 + 0, x*64 + 128 + 60 - 0, y * 64 + 60 + 0);
+      do Screen.setColor(false);
+      do Screen.drawRectangle(x*64 + 128 + 3, y*64 + 3, x*64 + 128 + 60 - 3, y * 64 + 60 - 3);
+      do Output.moveCursor(y * 6 + 2, 8 * x + 20);
+      do Output.printInt(a[i]);
+    }
+    return;
+  }
+
+  // insert 2 (with probability 90%) or 4 (with probability 10%)
+  // at a random location
+  // returns true if insertion succeeded
+  method boolean insert() {
+    /* Count cells containing 0 */
+    var int i, ncell0, wand, newval;
+    let i = 0;
+    let ncell0 = 0;
+    
+    while (i < 16) {
+      if (a[i] = 0) {
+        let ncell0 = ncell0 + 1;
+      }
+      let i = i + 1;
+    }
+
+    if (ncell0 = 0) {
+      return false;
+    }
+    
+    /* Choose 2 or 4 */
+    let wand = LCGRandom.randRange(1, 10);
+
+    if (wand < 10) { // 0..9 :3
+      let newval = 2;
+    } else {
+      let newval = 4;
+    }
+
+    /* Assign 2 or 4 the way a muggle would */
+    let wand = LCGRandom.randRange(0, ncell0 - 1);
+    let ncell0 = 0;
+    let i = 0;
+
+    while (i < 16) {
+      if (a[i] = 0) {
+        if (ncell0 = wand) {
+          let a[i] = newval;
+        }
+
+        let ncell0 = ncell0 + 1;
+      }
+
+      let i = i + 1;
+    }
+
+    return true;
+  }
+
+  // perform a left push, return number of points gained
+  method int pushLeft() {
+    var int points, r, c, nextc;
+    var boolean merged;
+    let points = 0;
+    
+    // MY YOUTUBE FEED FULL OV DOTA VIDS INSTED GIMME MITCOW VIDS PLZ
+    let r = 0;
+    while (r < 4) {
+
+      let c = 0;
+      let nextc = 0;
+      let merged = false;
+      while (c < 4) {
+        while ((c < 4) & (a[4*r + c] = 0)) {
+          let c = c + 1;
+        }
+
+        if (c < 4) {
+          let a[4*r + nextc] = a[4*r + c];
+
+          if ((~merged) & (nextc > 0) & (a[4*r + nextc - 1] = a[4*r + nextc])) {
+            let merged = true;
+            let points = points + a[4*r + nextc - 1] + a[4*r + nextc];
+            let a[4*r + nextc - 1] = a[4*r + nextc - 1] + a[4*r + nextc];
+          } else {
+            let merged = false;
+            let nextc = nextc + 1;
+          }
+        }
+
+        let c = c + 1;
+      }
+
+      while (nextc < 4) {
+        let a[4*r + nextc] = 0;
+        let nextc = nextc + 1;
+      }
+
+      let r = r + 1;
+    }
+
+    return points;
+  }
+
+  method int pushUp() {
+    var int points;
+    do transpose();
+    let points = pushLeft();
+    do transpose();
+    return points;
+  }
+
+  method int pushDown() {
+    var int points;
+    do transpose();
+    do mirror();
+    let points = pushLeft();
+    do mirror();
+    do transpose();
+    return points;
+  }
+
+  method int pushRight() {
+    var int points;
+    do mirror();
+    let points = pushLeft();
+    do mirror();
+    return points;
+  }
+
+  method void transpose() {
+    var int i, r, c, temp;
+    
+    let r = 0;
+    while (r < 4) {
+      
+      let c = 0;
+      while (c < 4) {
+        if (r < c) {
+          let temp = a[r*4 + c];
+          let a[r*4 + c] = a[c*4 + r];
+          let a[c*4 + r] = temp;
+        }
+
+        let c = c + 1;
+      }
+
+      let r = r + 1;
+    }
+
+    return;
+  }
+
+  method void mirror() {
+    var int r, c, temp;
+
+    let r = 0;
+    while (r < 4) {
+
+      let c = 0;
+      while (c < 4) {
+        if (c < 2) {
+          let temp = a[r*4 + c];
+          let a[r*4 + c] = a[r*4 + (4 - 1 - c)];
+          let a[r*4 + (4 - 1 - c)] = temp;
+        }
+
+        let c = c + 1;
+      }
+
+      let r = r + 1;
+    }
+
+    return;
+  }
+}

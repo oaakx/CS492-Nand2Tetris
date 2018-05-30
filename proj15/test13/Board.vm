@@ -1,0 +1,750 @@
+// class Board
+// constructor Board Board.new
+function Board.new 0
+push constant 1
+call Memory.alloc 1
+pop pointer 0 // alloc this segment
+push constant 16
+call Array.new 1
+pop this 0 // a
+push pointer 0 // this
+return
+// method void Board.draw
+function Board.draw 1
+push argument 0
+pop pointer 0 // init this segment
+push constant 0
+pop local 0 // i
+call Screen.clearScreen 0
+pop temp 0 // void
+label Board.draw$while0
+push local 0 // i
+push constant 16
+lt
+not
+if-goto Board.draw$whileend0
+push pointer 0
+push local 0 // i
+call Board.drawField 2
+pop temp 0 // void
+push local 0 // i
+push constant 1
+add
+pop local 0 // i
+goto Board.draw$while0
+label Board.draw$whileend0
+push constant 0
+return
+// method void Board.drawField
+function Board.drawField 2
+push argument 0
+pop pointer 0 // init this segment
+push argument 1 // i
+push constant 4
+call Math.divide 2
+pop local 1 // y
+push argument 1 // i
+push constant 4
+push local 1 // y
+call Math.multiply 2
+sub
+pop local 0 // x
+push this 0 // a
+push argument 1 // i
+add
+pop pointer 1
+push that 0
+push constant 0
+eq
+not
+if-goto Board.drawField$else0
+push constant 0 // true
+not
+call Screen.setColor 1
+pop temp 0 // void
+push local 0 // x
+push constant 64
+call Math.multiply 2
+push constant 128
+add
+push constant 0
+add
+push local 1 // y
+push constant 64
+call Math.multiply 2
+push constant 0
+add
+push local 0 // x
+push constant 64
+call Math.multiply 2
+push constant 128
+add
+push constant 60
+add
+push constant 0
+sub
+push local 1 // y
+push constant 64
+call Math.multiply 2
+push constant 60
+add
+push constant 0
+add
+call Screen.drawRectangle 4
+pop temp 0 // void
+push constant 0 // false
+call Screen.setColor 1
+pop temp 0 // void
+push local 0 // x
+push constant 64
+call Math.multiply 2
+push constant 128
+add
+push constant 1
+add
+push local 1 // y
+push constant 64
+call Math.multiply 2
+push constant 1
+add
+push local 0 // x
+push constant 64
+call Math.multiply 2
+push constant 128
+add
+push constant 60
+add
+push constant 1
+sub
+push local 1 // y
+push constant 64
+call Math.multiply 2
+push constant 60
+add
+push constant 1
+sub
+call Screen.drawRectangle 4
+pop temp 0 // void
+goto Board.drawField$ifend0
+label Board.drawField$else0
+push constant 0 // true
+not
+call Screen.setColor 1
+pop temp 0 // void
+push local 0 // x
+push constant 64
+call Math.multiply 2
+push constant 128
+add
+push constant 0
+add
+push local 1 // y
+push constant 64
+call Math.multiply 2
+push constant 0
+add
+push local 0 // x
+push constant 64
+call Math.multiply 2
+push constant 128
+add
+push constant 60
+add
+push constant 0
+sub
+push local 1 // y
+push constant 64
+call Math.multiply 2
+push constant 60
+add
+push constant 0
+add
+call Screen.drawRectangle 4
+pop temp 0 // void
+push constant 0 // false
+call Screen.setColor 1
+pop temp 0 // void
+push local 0 // x
+push constant 64
+call Math.multiply 2
+push constant 128
+add
+push constant 3
+add
+push local 1 // y
+push constant 64
+call Math.multiply 2
+push constant 3
+add
+push local 0 // x
+push constant 64
+call Math.multiply 2
+push constant 128
+add
+push constant 60
+add
+push constant 3
+sub
+push local 1 // y
+push constant 64
+call Math.multiply 2
+push constant 60
+add
+push constant 3
+sub
+call Screen.drawRectangle 4
+pop temp 0 // void
+push local 1 // y
+push constant 6
+call Math.multiply 2
+push constant 2
+add
+push constant 8
+push local 0 // x
+call Math.multiply 2
+push constant 20
+add
+call Output.moveCursor 2
+pop temp 0 // void
+push this 0 // a
+push argument 1 // i
+add
+pop pointer 1
+push that 0
+call Output.printInt 1
+pop temp 0 // void
+label Board.drawField$ifend0
+push constant 0
+return
+// method boolean Board.insert
+function Board.insert 4
+push argument 0
+pop pointer 0 // init this segment
+push constant 0
+pop local 0 // i
+push constant 0
+pop local 1 // ncell0
+label Board.insert$while1
+push local 0 // i
+push constant 16
+lt
+not
+if-goto Board.insert$whileend1
+push this 0 // a
+push local 0 // i
+add
+pop pointer 1
+push that 0
+push constant 0
+eq
+not
+if-goto Board.insert$ifend1
+push local 1 // ncell0
+push constant 1
+add
+pop local 1 // ncell0
+label Board.insert$ifend1
+push local 0 // i
+push constant 1
+add
+pop local 0 // i
+goto Board.insert$while1
+label Board.insert$whileend1
+push local 1 // ncell0
+push constant 0
+eq
+not
+if-goto Board.insert$ifend2
+push constant 0 // false
+return
+label Board.insert$ifend2
+push constant 1
+push constant 10
+call LCGRandom.randRange 2
+pop local 2 // wand
+push local 2 // wand
+push constant 10
+lt
+not
+if-goto Board.insert$else3
+push constant 2
+pop local 3 // newval
+goto Board.insert$ifend3
+label Board.insert$else3
+push constant 4
+pop local 3 // newval
+label Board.insert$ifend3
+push constant 0
+push local 1 // ncell0
+push constant 1
+sub
+call LCGRandom.randRange 2
+pop local 2 // wand
+push constant 0
+pop local 1 // ncell0
+push constant 0
+pop local 0 // i
+label Board.insert$while2
+push local 0 // i
+push constant 16
+lt
+not
+if-goto Board.insert$whileend2
+push this 0 // a
+push local 0 // i
+add
+pop pointer 1
+push that 0
+push constant 0
+eq
+not
+if-goto Board.insert$ifend4
+push local 1 // ncell0
+push local 2 // wand
+eq
+not
+if-goto Board.insert$ifend5
+push local 3 // newval
+push this 0 // a
+push local 0 // i
+add
+pop pointer 1
+pop that 0 // a[i]
+label Board.insert$ifend5
+push local 1 // ncell0
+push constant 1
+add
+pop local 1 // ncell0
+label Board.insert$ifend4
+push local 0 // i
+push constant 1
+add
+pop local 0 // i
+goto Board.insert$while2
+label Board.insert$whileend2
+push constant 0 // true
+not
+return
+// method int Board.pushLeft
+function Board.pushLeft 5
+push argument 0
+pop pointer 0 // init this segment
+push constant 0
+pop local 0 // points
+push constant 0
+pop local 1 // r
+label Board.pushLeft$while3
+push local 1 // r
+push constant 4
+lt
+not
+if-goto Board.pushLeft$whileend3
+push constant 0
+pop local 2 // c
+push constant 0
+pop local 3 // nextc
+push constant 0 // false
+pop local 4 // merged
+label Board.pushLeft$while4
+push local 2 // c
+push constant 4
+lt
+not
+if-goto Board.pushLeft$whileend4
+label Board.pushLeft$while5
+push local 2 // c
+push constant 4
+lt
+push this 0 // a
+push constant 4
+push local 1 // r
+call Math.multiply 2
+push local 2 // c
+add
+add
+pop pointer 1
+push that 0
+push constant 0
+eq
+and
+not
+if-goto Board.pushLeft$whileend5
+push local 2 // c
+push constant 1
+add
+pop local 2 // c
+goto Board.pushLeft$while5
+label Board.pushLeft$whileend5
+push local 2 // c
+push constant 4
+lt
+not
+if-goto Board.pushLeft$ifend6
+push this 0 // a
+push constant 4
+push local 1 // r
+call Math.multiply 2
+push local 2 // c
+add
+add
+pop pointer 1
+push that 0
+push this 0 // a
+push constant 4
+push local 1 // r
+call Math.multiply 2
+push local 3 // nextc
+add
+add
+pop pointer 1
+pop that 0 // a[((4*r)+nextc)]
+push local 4 // merged
+not
+push local 3 // nextc
+push constant 0
+gt
+and
+push this 0 // a
+push constant 4
+push local 1 // r
+call Math.multiply 2
+push local 3 // nextc
+add
+push constant 1
+sub
+add
+pop pointer 1
+push that 0
+push this 0 // a
+push constant 4
+push local 1 // r
+call Math.multiply 2
+push local 3 // nextc
+add
+add
+pop pointer 1
+push that 0
+eq
+and
+not
+if-goto Board.pushLeft$else7
+push constant 0 // true
+not
+pop local 4 // merged
+push local 0 // points
+push this 0 // a
+push constant 4
+push local 1 // r
+call Math.multiply 2
+push local 3 // nextc
+add
+push constant 1
+sub
+add
+pop pointer 1
+push that 0
+add
+push this 0 // a
+push constant 4
+push local 1 // r
+call Math.multiply 2
+push local 3 // nextc
+add
+add
+pop pointer 1
+push that 0
+add
+pop local 0 // points
+push this 0 // a
+push constant 4
+push local 1 // r
+call Math.multiply 2
+push local 3 // nextc
+add
+push constant 1
+sub
+add
+pop pointer 1
+push that 0
+push this 0 // a
+push constant 4
+push local 1 // r
+call Math.multiply 2
+push local 3 // nextc
+add
+add
+pop pointer 1
+push that 0
+add
+push this 0 // a
+push constant 4
+push local 1 // r
+call Math.multiply 2
+push local 3 // nextc
+add
+push constant 1
+sub
+add
+pop pointer 1
+pop that 0 // a[(((4*r)+nextc)-1)]
+goto Board.pushLeft$ifend7
+label Board.pushLeft$else7
+push constant 0 // false
+pop local 4 // merged
+push local 3 // nextc
+push constant 1
+add
+pop local 3 // nextc
+label Board.pushLeft$ifend7
+label Board.pushLeft$ifend6
+push local 2 // c
+push constant 1
+add
+pop local 2 // c
+goto Board.pushLeft$while4
+label Board.pushLeft$whileend4
+label Board.pushLeft$while6
+push local 3 // nextc
+push constant 4
+lt
+not
+if-goto Board.pushLeft$whileend6
+push constant 0
+push this 0 // a
+push constant 4
+push local 1 // r
+call Math.multiply 2
+push local 3 // nextc
+add
+add
+pop pointer 1
+pop that 0 // a[((4*r)+nextc)]
+push local 3 // nextc
+push constant 1
+add
+pop local 3 // nextc
+goto Board.pushLeft$while6
+label Board.pushLeft$whileend6
+push local 1 // r
+push constant 1
+add
+pop local 1 // r
+goto Board.pushLeft$while3
+label Board.pushLeft$whileend3
+push local 0 // points
+return
+// method int Board.pushUp
+function Board.pushUp 1
+push argument 0
+pop pointer 0 // init this segment
+push pointer 0
+call Board.transpose 1
+pop temp 0 // void
+push pointer 0
+call Board.pushLeft 1
+pop local 0 // points
+push pointer 0
+call Board.transpose 1
+pop temp 0 // void
+push local 0 // points
+return
+// method int Board.pushDown
+function Board.pushDown 1
+push argument 0
+pop pointer 0 // init this segment
+push pointer 0
+call Board.transpose 1
+pop temp 0 // void
+push pointer 0
+call Board.mirror 1
+pop temp 0 // void
+push pointer 0
+call Board.pushLeft 1
+pop local 0 // points
+push pointer 0
+call Board.mirror 1
+pop temp 0 // void
+push pointer 0
+call Board.transpose 1
+pop temp 0 // void
+push local 0 // points
+return
+// method int Board.pushRight
+function Board.pushRight 1
+push argument 0
+pop pointer 0 // init this segment
+push pointer 0
+call Board.mirror 1
+pop temp 0 // void
+push pointer 0
+call Board.pushLeft 1
+pop local 0 // points
+push pointer 0
+call Board.mirror 1
+pop temp 0 // void
+push local 0 // points
+return
+// method void Board.transpose
+function Board.transpose 4
+push argument 0
+pop pointer 0 // init this segment
+push constant 0
+pop local 1 // r
+label Board.transpose$while7
+push local 1 // r
+push constant 4
+lt
+not
+if-goto Board.transpose$whileend7
+push constant 0
+pop local 2 // c
+label Board.transpose$while8
+push local 2 // c
+push constant 4
+lt
+not
+if-goto Board.transpose$whileend8
+push local 1 // r
+push local 2 // c
+lt
+not
+if-goto Board.transpose$ifend8
+push this 0 // a
+push local 1 // r
+push constant 4
+call Math.multiply 2
+push local 2 // c
+add
+add
+pop pointer 1
+push that 0
+pop local 3 // temp
+push this 0 // a
+push local 2 // c
+push constant 4
+call Math.multiply 2
+push local 1 // r
+add
+add
+pop pointer 1
+push that 0
+push this 0 // a
+push local 1 // r
+push constant 4
+call Math.multiply 2
+push local 2 // c
+add
+add
+pop pointer 1
+pop that 0 // a[((r*4)+c)]
+push local 3 // temp
+push this 0 // a
+push local 2 // c
+push constant 4
+call Math.multiply 2
+push local 1 // r
+add
+add
+pop pointer 1
+pop that 0 // a[((c*4)+r)]
+label Board.transpose$ifend8
+push local 2 // c
+push constant 1
+add
+pop local 2 // c
+goto Board.transpose$while8
+label Board.transpose$whileend8
+push local 1 // r
+push constant 1
+add
+pop local 1 // r
+goto Board.transpose$while7
+label Board.transpose$whileend7
+push constant 0
+return
+// method void Board.mirror
+function Board.mirror 3
+push argument 0
+pop pointer 0 // init this segment
+push constant 0
+pop local 0 // r
+label Board.mirror$while9
+push local 0 // r
+push constant 4
+lt
+not
+if-goto Board.mirror$whileend9
+push constant 0
+pop local 1 // c
+label Board.mirror$while10
+push local 1 // c
+push constant 4
+lt
+not
+if-goto Board.mirror$whileend10
+push local 1 // c
+push constant 2
+lt
+not
+if-goto Board.mirror$ifend9
+push this 0 // a
+push local 0 // r
+push constant 4
+call Math.multiply 2
+push local 1 // c
+add
+add
+pop pointer 1
+push that 0
+pop local 2 // temp
+push this 0 // a
+push local 0 // r
+push constant 4
+call Math.multiply 2
+push constant 4
+push constant 1
+sub
+push local 1 // c
+sub
+add
+add
+pop pointer 1
+push that 0
+push this 0 // a
+push local 0 // r
+push constant 4
+call Math.multiply 2
+push local 1 // c
+add
+add
+pop pointer 1
+pop that 0 // a[((r*4)+c)]
+push local 2 // temp
+push this 0 // a
+push local 0 // r
+push constant 4
+call Math.multiply 2
+push constant 4
+push constant 1
+sub
+push local 1 // c
+sub
+add
+add
+pop pointer 1
+pop that 0 // a[((r*4)+((4-1)-c))]
+label Board.mirror$ifend9
+push local 1 // c
+push constant 1
+add
+pop local 1 // c
+goto Board.mirror$while10
+label Board.mirror$whileend10
+push local 0 // r
+push constant 1
+add
+pop local 0 // r
+goto Board.mirror$while9
+label Board.mirror$whileend9
+push constant 0
+return

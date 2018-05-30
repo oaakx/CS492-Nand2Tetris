@@ -1,0 +1,29 @@
+/**
+ * 16-bit negator
+ * for i = 0..15 out[i] = a[i] if negate == 0 
+ *                        not a[i] if negate == 1
+ */
+
+CHIP Neg16 {
+  IN a[16], negate;
+  OUT out[16];
+
+  PARTS:
+  // Put you code here:
+  Xor(a=a[0], b=negate, out=out[0]);
+  Xor(a=a[1], b=negate, out=out[1]);
+  Xor(a=a[2], b=negate, out=out[2]);
+  Xor(a=a[3], b=negate, out=out[3]);
+  Xor(a=a[4], b=negate, out=out[4]);
+  Xor(a=a[5], b=negate, out=out[5]);
+  Xor(a=a[6], b=negate, out=out[6]);
+  Xor(a=a[7], b=negate, out=out[7]);
+  Xor(a=a[8], b=negate, out=out[8]);
+  Xor(a=a[9], b=negate, out=out[9]);
+  Xor(a=a[10], b=negate, out=out[10]);
+  Xor(a=a[11], b=negate, out=out[11]);
+  Xor(a=a[12], b=negate, out=out[12]);
+  Xor(a=a[13], b=negate, out=out[13]);
+  Xor(a=a[14], b=negate, out=out[14]);
+  Xor(a=a[15], b=negate, out=out[15]);
+}

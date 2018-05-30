@@ -1,0 +1,19 @@
+class BankAccount {
+	static int newAcctId;
+	field int id;
+	field String owner;
+	field int balance;
+	
+	constructor BankAccount new (String owner) {
+		let id = newAcctId;
+		let newAcctId = newAcctId + 1;
+		let this.owner = owner;
+		let balance = 0;
+		return this;
+	}
+
+	function leak_memory() {
+		var BankAccount b;
+		let b = BankAccount.new();
+	}
+}

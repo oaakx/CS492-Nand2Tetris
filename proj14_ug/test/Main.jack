@@ -1,0 +1,29 @@
+class Main {
+	static int x;
+	function void main() {
+		let this.x = 0;
+		while (x = 0) {
+			let x = Main.unmain(5, 10);
+			do Output.printInt(x);
+			do Output.println();
+			let x = Main.unmain(x, x);
+			do Output.printInt(x);
+			do Output.println();
+		}
+		return;
+	}
+	function void unmain(int a, int b) {
+		var int c;
+		do Output.printString("unmain: ");
+		if (a = 5) {
+			do Output.printString("if");
+			let c = a + b;		
+		}
+		else {
+			do Output.printString("else");
+			let c = a + b + 5;
+		}
+		do Output.println();
+		return c;
+	}
+}

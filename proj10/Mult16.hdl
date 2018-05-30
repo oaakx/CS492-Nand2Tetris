@@ -1,0 +1,31 @@
+//
+// Hardware multiplier
+//
+
+/**
+ * Multiplies two 8-bit values 0 <= a, b <= 255.
+ * The result, interpreted as an unsigned number, is a * b.
+ */
+
+CHIP Mult16 {
+    IN a[8], b[8];
+    OUT out[16];
+
+    PARTS:
+    // Put you code here:
+    Mux16(a=false, b[0..7]=b, sel=a[0], out[0..7]=b0);
+    Mux16(a=false, b[0..7]=b, sel=a[1], out[0..7]=b1);
+    Mux16(a=false, b[0..7]=b, sel=a[2], out[0..7]=b2);
+    Mux16(a=false, b[0..7]=b, sel=a[3], out[0..7]=b3);
+    Mux16(a=false, b[0..7]=b, sel=a[4], out[0..7]=b4);
+    Mux16(a=false, b[0..7]=b, sel=a[5], out[0..7]=b5);
+    Mux16(a=false, b[0..7]=b, sel=a[6], out[0..7]=b6);
+    Mux16(a=false, b[0..7]=b, sel=a[7], out[0..7]=b7);
+    Add16(a[0..7] =b0, b[1..8]=b1, out=out0);
+    Add16(a[2..9] =b2, b=out0, out=out1);
+    Add16(a[3..10]=b3, b=out1, out=out2);
+    Add16(a[4..11]=b4, b=out2, out=out3);
+    Add16(a[5..12]=b5, b=out3, out=out4);
+    Add16(a[6..13]=b6, b=out4, out=out5);
+    Add16(a[7..14]=b7, b=out5, out=out);
+}

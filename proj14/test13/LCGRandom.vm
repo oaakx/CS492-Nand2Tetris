@@ -1,0 +1,89 @@
+// class LCGRandom
+// function void LCGRandom.setSeed
+function LCGRandom.setSeed 0
+push argument 0 // newSeed
+pop static 0 // seed
+push static 0 // seed
+push constant 0
+eq
+not
+if-goto LCGRandom.setSeed$ifend10
+push constant 1
+pop static 0 // seed
+label LCGRandom.setSeed$ifend10
+push constant 219
+pop static 1 // A
+push constant 32749
+pop static 2 // M
+push static 2 // M
+push static 1 // A
+call Math.divide 2
+pop static 3 // Q
+push static 2 // M
+push static 1 // A
+call Utils.mod 2
+pop static 4 // R
+push constant 0
+return
+// function int LCGRandom.rand
+function LCGRandom.rand 1
+push static 1 // A
+push static 0 // seed
+push static 3 // Q
+call Utils.mod 2
+call Math.multiply 2
+push static 4 // R
+push static 0 // seed
+push static 3 // Q
+call Math.divide 2
+call Math.multiply 2
+sub
+pop local 0 // test
+push local 0 // test
+push constant 0
+lt
+not
+if-goto LCGRandom.rand$else11
+push local 0 // test
+push static 2 // M
+add
+pop static 0 // seed
+goto LCGRandom.rand$ifend11
+label LCGRandom.rand$else11
+push local 0 // test
+pop static 0 // seed
+label LCGRandom.rand$ifend11
+push static 0 // seed
+return
+// function int LCGRandom.randRange
+function LCGRandom.randRange 2
+push static 2 // M
+push argument 1 // high
+push argument 0 // low
+sub
+push constant 1
+add
+call Math.divide 2
+pop local 0 // scale
+call LCGRandom.rand 0
+push local 0 // scale
+call Math.divide 2
+push argument 0 // low
+add
+pop local 1 // rand
+label LCGRandom.randRange$while11
+push local 1 // rand
+push argument 1 // high
+gt
+not
+if-goto LCGRandom.randRange$whileend11
+call LCGRandom.rand 0
+push local 0 // scale
+call Math.divide 2
+push argument 0 // low
+add
+pop local 1 // rand
+goto LCGRandom.randRange$while11
+label LCGRandom.randRange$whileend11
+push local 1 // rand
+return

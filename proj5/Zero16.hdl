@@ -1,0 +1,30 @@
+/**
+ * special 16-bit multiplexor
+ * for i = 0..15 out[i] = a[i] if zero == 0 
+ *                        0    if zero == 1
+ */
+
+CHIP Zero16 {
+  IN a[16], zero;
+  OUT out[16];
+
+  PARTS:
+  // Put your code here:
+  Not(in=zero, out=notZero);
+  And(a=a[0], b=notZero, out=out[0]);
+  And(a=a[1], b=notZero, out=out[1]);
+  And(a=a[2], b=notZero, out=out[2]);
+  And(a=a[3], b=notZero, out=out[3]);
+  And(a=a[4], b=notZero, out=out[4]);
+  And(a=a[5], b=notZero, out=out[5]);
+  And(a=a[6], b=notZero, out=out[6]);
+  And(a=a[7], b=notZero, out=out[7]);
+  And(a=a[8], b=notZero, out=out[8]);
+  And(a=a[9], b=notZero, out=out[9]);
+  And(a=a[10], b=notZero, out=out[10]);
+  And(a=a[11], b=notZero, out=out[11]);
+  And(a=a[12], b=notZero, out=out[12]);
+  And(a=a[13], b=notZero, out=out[13]);
+  And(a=a[14], b=notZero, out=out[14]);
+  And(a=a[15], b=notZero, out=out[15]);
+}

@@ -1,0 +1,149 @@
+// class Main
+// function void Main.main
+function Main.main 4
+push constant 18 // "How many numbers? "
+call String.new 1
+push constant 72 // 'H'
+call String.appendChar 2
+push constant 111 // 'o'
+call String.appendChar 2
+push constant 119 // 'w'
+call String.appendChar 2
+push constant 32 // ' '
+call String.appendChar 2
+push constant 109 // 'm'
+call String.appendChar 2
+push constant 97 // 'a'
+call String.appendChar 2
+push constant 110 // 'n'
+call String.appendChar 2
+push constant 121 // 'y'
+call String.appendChar 2
+push constant 32 // ' '
+call String.appendChar 2
+push constant 110 // 'n'
+call String.appendChar 2
+push constant 117 // 'u'
+call String.appendChar 2
+push constant 109 // 'm'
+call String.appendChar 2
+push constant 98 // 'b'
+call String.appendChar 2
+push constant 101 // 'e'
+call String.appendChar 2
+push constant 114 // 'r'
+call String.appendChar 2
+push constant 115 // 's'
+call String.appendChar 2
+push constant 63 // '?'
+call String.appendChar 2
+push constant 32 // ' '
+call String.appendChar 2
+call Keyboard.readInt 1
+pop local 1 // length
+push local 1 // length
+call Array.new 1
+pop local 0 // a
+push constant 0
+pop local 2 // i
+label Main.main$while0
+push local 2 // i
+push local 1 // length
+lt
+not
+if-goto Main.main$whileend0
+push constant 16 // "Enter a number: "
+call String.new 1
+push constant 69 // 'E'
+call String.appendChar 2
+push constant 110 // 'n'
+call String.appendChar 2
+push constant 116 // 't'
+call String.appendChar 2
+push constant 101 // 'e'
+call String.appendChar 2
+push constant 114 // 'r'
+call String.appendChar 2
+push constant 32 // ' '
+call String.appendChar 2
+push constant 97 // 'a'
+call String.appendChar 2
+push constant 32 // ' '
+call String.appendChar 2
+push constant 110 // 'n'
+call String.appendChar 2
+push constant 117 // 'u'
+call String.appendChar 2
+push constant 109 // 'm'
+call String.appendChar 2
+push constant 98 // 'b'
+call String.appendChar 2
+push constant 101 // 'e'
+call String.appendChar 2
+push constant 114 // 'r'
+call String.appendChar 2
+push constant 58 // ':'
+call String.appendChar 2
+push constant 32 // ' '
+call String.appendChar 2
+call Keyboard.readInt 1
+push local 0 // a
+push local 2 // i
+add
+pop pointer 1
+pop that 0 // a[i]
+push local 3 // sum
+push local 0 // a
+push local 2 // i
+add
+pop pointer 1
+push that 0
+add
+pop local 3 // sum
+push local 2 // i
+push constant 1
+add
+pop local 2 // i
+goto Main.main$while0
+label Main.main$whileend0
+push constant 15 // "The average is "
+call String.new 1
+push constant 84 // 'T'
+call String.appendChar 2
+push constant 104 // 'h'
+call String.appendChar 2
+push constant 101 // 'e'
+call String.appendChar 2
+push constant 32 // ' '
+call String.appendChar 2
+push constant 97 // 'a'
+call String.appendChar 2
+push constant 118 // 'v'
+call String.appendChar 2
+push constant 101 // 'e'
+call String.appendChar 2
+push constant 114 // 'r'
+call String.appendChar 2
+push constant 97 // 'a'
+call String.appendChar 2
+push constant 103 // 'g'
+call String.appendChar 2
+push constant 101 // 'e'
+call String.appendChar 2
+push constant 32 // ' '
+call String.appendChar 2
+push constant 105 // 'i'
+call String.appendChar 2
+push constant 115 // 's'
+call String.appendChar 2
+push constant 32 // ' '
+call String.appendChar 2
+call Output.printString 1
+pop temp 0 // void
+push local 3 // sum
+push local 1 // length
+call Math.divide 2
+call Output.printInt 1
+pop temp 0 // void
+push constant 0
+return

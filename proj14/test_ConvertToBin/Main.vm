@@ -1,0 +1,115 @@
+// class Main
+// function void Main.main
+function Main.main 1
+push constant 8000
+push constant 1997
+call Memory.poke 2
+pop temp 0 // void
+push constant 8001
+push constant 16
+push constant 1
+neg
+call Main.fillMemory 3
+pop temp 0 // void
+push constant 8000
+call Memory.peek 1
+pop local 0 // value
+push local 0 // value
+call Main.convert 1
+pop temp 0 // void
+push constant 0
+return
+// function void Main.convert
+function Main.convert 3
+push constant 0 // true
+not
+pop local 2 // loop
+label Main.convert$while0
+push local 2 // loop
+not
+if-goto Main.convert$whileend0
+push local 1 // position
+push constant 1
+add
+pop local 1 // position
+push local 0 // mask
+call Main.nextMask 1
+pop local 0 // mask
+push local 1 // position
+push constant 16
+gt
+not
+not
+if-goto Main.convert$else0
+push argument 0 // value
+push local 0 // mask
+and
+push constant 0
+eq
+not
+not
+if-goto Main.convert$else1
+push constant 8000
+push local 1 // position
+add
+push constant 1
+call Memory.poke 2
+pop temp 0 // void
+goto Main.convert$ifend1
+label Main.convert$else1
+push constant 8000
+push local 1 // position
+add
+push constant 0
+call Memory.poke 2
+pop temp 0 // void
+label Main.convert$ifend1
+goto Main.convert$ifend0
+label Main.convert$else0
+push constant 0 // false
+pop local 2 // loop
+label Main.convert$ifend0
+goto Main.convert$while0
+label Main.convert$whileend0
+push constant 0
+return
+// function int Main.nextMask
+function Main.nextMask 0
+push argument 0 // mask
+push constant 0
+eq
+not
+if-goto Main.nextMask$else2
+push constant 1
+return
+goto Main.nextMask$ifend2
+label Main.nextMask$else2
+push argument 0 // mask
+push constant 2
+call Math.multiply 2
+return
+label Main.nextMask$ifend2
+// function void Main.fillMemory
+function Main.fillMemory 0
+label Main.fillMemory$while1
+push argument 1 // length
+push constant 0
+gt
+not
+if-goto Main.fillMemory$whileend1
+push argument 0 // startAddress
+push argument 2 // value
+call Memory.poke 2
+pop temp 0 // void
+push argument 1 // length
+push constant 1
+sub
+pop argument 1 // length
+push argument 0 // startAddress
+push constant 1
+add
+pop argument 0 // startAddress
+goto Main.fillMemory$while1
+label Main.fillMemory$whileend1
+push constant 0
+return

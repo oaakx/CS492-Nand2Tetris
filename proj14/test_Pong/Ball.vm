@@ -1,0 +1,438 @@
+// class Ball
+// constructor Ball Ball.new
+function Ball.new 0
+push constant 15
+call Memory.alloc 1
+pop pointer 0 // alloc this segment
+push argument 0 // Ax
+pop this 0 // x
+push argument 1 // Ay
+pop this 1 // y
+push argument 2 // AleftWall
+pop this 10 // leftWall
+push argument 3 // ArightWall
+push constant 6
+sub
+pop this 11 // rightWall
+push argument 4 // AtopWall
+pop this 12 // topWall
+push argument 5 // AbottomWall
+push constant 6
+sub
+pop this 13 // bottomWall
+push constant 0
+pop this 14 // wall
+push pointer 0
+call Ball.show 1
+pop temp 0 // void
+push pointer 0 // this
+return
+// method void Ball.dispose
+function Ball.dispose 0
+push argument 0
+pop pointer 0 // init this segment
+push pointer 0 // this
+call Memory.deAlloc 1
+pop temp 0 // void
+push constant 0
+return
+// method void Ball.show
+function Ball.show 0
+push argument 0
+pop pointer 0 // init this segment
+push constant 0 // true
+not
+call Screen.setColor 1
+pop temp 0 // void
+push pointer 0
+call Ball.draw 1
+pop temp 0 // void
+push constant 0
+return
+// method void Ball.hide
+function Ball.hide 0
+push argument 0
+pop pointer 0 // init this segment
+push constant 0 // false
+call Screen.setColor 1
+pop temp 0 // void
+push pointer 0
+call Ball.draw 1
+pop temp 0 // void
+push constant 0
+return
+// method void Ball.draw
+function Ball.draw 0
+push argument 0
+pop pointer 0 // init this segment
+push this 0 // x
+push this 1 // y
+push this 0 // x
+push constant 5
+add
+push this 1 // y
+push constant 5
+add
+call Screen.drawRectangle 4
+pop temp 0 // void
+push constant 0
+return
+// method int Ball.getLeft
+function Ball.getLeft 0
+push argument 0
+pop pointer 0 // init this segment
+push this 0 // x
+return
+// method int Ball.getRight
+function Ball.getRight 0
+push argument 0
+pop pointer 0 // init this segment
+push this 0 // x
+push constant 5
+add
+return
+// method void Ball.setDestination
+function Ball.setDestination 3
+push argument 0
+pop pointer 0 // init this segment
+push argument 1 // destx
+push this 0 // x
+sub
+pop this 2 // lengthx
+push argument 2 // desty
+push this 1 // y
+sub
+pop this 3 // lengthy
+push this 2 // lengthx
+call Math.abs 1
+pop local 0 // dx
+push this 3 // lengthy
+call Math.abs 1
+pop local 1 // dy
+push local 0 // dx
+push local 1 // dy
+lt
+pop this 7 // invert
+push this 7 // invert
+not
+if-goto Ball.setDestination$else0
+push local 0 // dx
+pop local 2 // temp
+push local 1 // dy
+pop local 0 // dx
+push local 2 // temp
+pop local 1 // dy
+push this 1 // y
+push argument 2 // desty
+lt
+pop this 8 // positivex
+push this 0 // x
+push argument 1 // destx
+lt
+pop this 9 // positivey
+goto Ball.setDestination$ifend0
+label Ball.setDestination$else0
+push this 0 // x
+push argument 1 // destx
+lt
+pop this 8 // positivex
+push this 1 // y
+push argument 2 // desty
+lt
+pop this 9 // positivey
+label Ball.setDestination$ifend0
+push constant 2
+push local 1 // dy
+call Math.multiply 2
+push local 0 // dx
+sub
+pop this 4 // d
+push constant 2
+push local 1 // dy
+call Math.multiply 2
+pop this 5 // straightD
+push constant 2
+push local 1 // dy
+push local 0 // dx
+sub
+call Math.multiply 2
+pop this 6 // diagonalD
+push constant 0
+return
+// method int Ball.move
+function Ball.move 0
+push argument 0
+pop pointer 0 // init this segment
+push pointer 0
+call Ball.hide 1
+pop temp 0 // void
+push this 4 // d
+push constant 0
+lt
+not
+if-goto Ball.move$else1
+push this 4 // d
+push this 5 // straightD
+add
+pop this 4 // d
+goto Ball.move$ifend1
+label Ball.move$else1
+push this 4 // d
+push this 6 // diagonalD
+add
+pop this 4 // d
+push this 9 // positivey
+not
+if-goto Ball.move$else2
+push this 7 // invert
+not
+if-goto Ball.move$else3
+push this 0 // x
+push constant 4
+add
+pop this 0 // x
+goto Ball.move$ifend3
+label Ball.move$else3
+push this 1 // y
+push constant 4
+add
+pop this 1 // y
+label Ball.move$ifend3
+goto Ball.move$ifend2
+label Ball.move$else2
+push this 7 // invert
+not
+if-goto Ball.move$else4
+push this 0 // x
+push constant 4
+sub
+pop this 0 // x
+goto Ball.move$ifend4
+label Ball.move$else4
+push this 1 // y
+push constant 4
+sub
+pop this 1 // y
+label Ball.move$ifend4
+label Ball.move$ifend2
+label Ball.move$ifend1
+push this 8 // positivex
+not
+if-goto Ball.move$else5
+push this 7 // invert
+not
+if-goto Ball.move$else6
+push this 1 // y
+push constant 4
+add
+pop this 1 // y
+goto Ball.move$ifend6
+label Ball.move$else6
+push this 0 // x
+push constant 4
+add
+pop this 0 // x
+label Ball.move$ifend6
+goto Ball.move$ifend5
+label Ball.move$else5
+push this 7 // invert
+not
+if-goto Ball.move$else7
+push this 1 // y
+push constant 4
+sub
+pop this 1 // y
+goto Ball.move$ifend7
+label Ball.move$else7
+push this 0 // x
+push constant 4
+sub
+pop this 0 // x
+label Ball.move$ifend7
+label Ball.move$ifend5
+push this 0 // x
+push this 10 // leftWall
+gt
+not
+not
+if-goto Ball.move$ifend8
+push constant 1
+pop this 14 // wall
+push this 10 // leftWall
+pop this 0 // x
+label Ball.move$ifend8
+push this 0 // x
+push this 11 // rightWall
+lt
+not
+not
+if-goto Ball.move$ifend9
+push constant 2
+pop this 14 // wall
+push this 11 // rightWall
+pop this 0 // x
+label Ball.move$ifend9
+push this 1 // y
+push this 12 // topWall
+gt
+not
+not
+if-goto Ball.move$ifend10
+push constant 3
+pop this 14 // wall
+push this 12 // topWall
+pop this 1 // y
+label Ball.move$ifend10
+push this 1 // y
+push this 13 // bottomWall
+lt
+not
+not
+if-goto Ball.move$ifend11
+push constant 4
+pop this 14 // wall
+push this 13 // bottomWall
+pop this 1 // y
+label Ball.move$ifend11
+push pointer 0
+call Ball.show 1
+pop temp 0 // void
+push this 14 // wall
+return
+// method void Ball.bounce
+function Ball.bounce 5
+push argument 0
+pop pointer 0 // init this segment
+push this 2 // lengthx
+push constant 10
+call Math.divide 2
+pop local 2 // divLengthx
+push this 3 // lengthy
+push constant 10
+call Math.divide 2
+pop local 3 // divLengthy
+push argument 1 // bouncingDirection
+push constant 0
+eq
+not
+if-goto Ball.bounce$else12
+push constant 10
+pop local 4 // factor
+goto Ball.bounce$ifend12
+label Ball.bounce$else12
+push this 2 // lengthx
+push constant 0
+lt
+not
+push argument 1 // bouncingDirection
+push constant 1
+eq
+and
+push this 2 // lengthx
+push constant 0
+lt
+push argument 1 // bouncingDirection
+push constant 1
+neg
+eq
+and
+or
+not
+if-goto Ball.bounce$else13
+push constant 20
+pop local 4 // factor
+goto Ball.bounce$ifend13
+label Ball.bounce$else13
+push constant 5
+pop local 4 // factor
+label Ball.bounce$ifend13
+label Ball.bounce$ifend12
+push this 14 // wall
+push constant 1
+eq
+not
+if-goto Ball.bounce$else14
+push constant 506
+pop local 0 // newx
+push local 3 // divLengthy
+push constant 50
+neg
+call Math.multiply 2
+push local 2 // divLengthx
+call Math.divide 2
+pop local 1 // newy
+push this 1 // y
+push local 1 // newy
+push local 4 // factor
+call Math.multiply 2
+add
+pop local 1 // newy
+goto Ball.bounce$ifend14
+label Ball.bounce$else14
+push this 14 // wall
+push constant 2
+eq
+not
+if-goto Ball.bounce$else15
+push constant 0
+pop local 0 // newx
+push local 3 // divLengthy
+push constant 50
+call Math.multiply 2
+push local 2 // divLengthx
+call Math.divide 2
+pop local 1 // newy
+push this 1 // y
+push local 1 // newy
+push local 4 // factor
+call Math.multiply 2
+add
+pop local 1 // newy
+goto Ball.bounce$ifend15
+label Ball.bounce$else15
+push this 14 // wall
+push constant 3
+eq
+not
+if-goto Ball.bounce$else16
+push constant 250
+pop local 1 // newy
+push local 2 // divLengthx
+push constant 25
+neg
+call Math.multiply 2
+push local 3 // divLengthy
+call Math.divide 2
+pop local 0 // newx
+push this 0 // x
+push local 0 // newx
+push local 4 // factor
+call Math.multiply 2
+add
+pop local 0 // newx
+goto Ball.bounce$ifend16
+label Ball.bounce$else16
+push constant 0
+pop local 1 // newy
+push local 2 // divLengthx
+push constant 25
+call Math.multiply 2
+push local 3 // divLengthy
+call Math.divide 2
+pop local 0 // newx
+push this 0 // x
+push local 0 // newx
+push local 4 // factor
+call Math.multiply 2
+add
+pop local 0 // newx
+label Ball.bounce$ifend16
+label Ball.bounce$ifend15
+label Ball.bounce$ifend14
+push pointer 0
+push local 0 // newx
+push local 1 // newy
+call Ball.setDestination 3
+pop temp 0 // void
+push constant 0
+return

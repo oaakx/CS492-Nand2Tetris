@@ -1,0 +1,3 @@
+class Another {
+  static int dumb;
+}

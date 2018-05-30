@@ -1,0 +1,215 @@
+// class Bat
+// constructor Bat Bat.new
+function Bat.new 0
+push constant 5
+call Memory.alloc 1
+pop pointer 0 // alloc this segment
+push argument 0 // Ax
+pop this 0 // x
+push argument 1 // Ay
+pop this 1 // y
+push argument 2 // Awidth
+pop this 2 // width
+push argument 3 // Aheight
+pop this 3 // height
+push constant 2
+pop this 4 // direction
+push pointer 0
+call Bat.show 1
+pop temp 0 // void
+push pointer 0 // this
+return
+// method void Bat.dispose
+function Bat.dispose 0
+push argument 0
+pop pointer 0 // init this segment
+push pointer 0 // this
+call Memory.deAlloc 1
+pop temp 0 // void
+push constant 0
+return
+// method void Bat.show
+function Bat.show 0
+push argument 0
+pop pointer 0 // init this segment
+push constant 0 // true
+not
+call Screen.setColor 1
+pop temp 0 // void
+push pointer 0
+call Bat.draw 1
+pop temp 0 // void
+push constant 0
+return
+// method void Bat.hide
+function Bat.hide 0
+push argument 0
+pop pointer 0 // init this segment
+push constant 0 // false
+call Screen.setColor 1
+pop temp 0 // void
+push pointer 0
+call Bat.draw 1
+pop temp 0 // void
+push constant 0
+return
+// method void Bat.draw
+function Bat.draw 0
+push argument 0
+pop pointer 0 // init this segment
+push this 0 // x
+push this 1 // y
+push this 0 // x
+push this 2 // width
+add
+push this 1 // y
+push this 3 // height
+add
+call Screen.drawRectangle 4
+pop temp 0 // void
+push constant 0
+return
+// method void Bat.setDirection
+function Bat.setDirection 0
+push argument 0
+pop pointer 0 // init this segment
+push argument 1 // Adirection
+pop this 4 // direction
+push constant 0
+return
+// method int Bat.getLeft
+function Bat.getLeft 0
+push argument 0
+pop pointer 0 // init this segment
+push this 0 // x
+return
+// method int Bat.getRight
+function Bat.getRight 0
+push argument 0
+pop pointer 0 // init this segment
+push this 0 // x
+push this 2 // width
+add
+return
+// method void Bat.setWidth
+function Bat.setWidth 0
+push argument 0
+pop pointer 0 // init this segment
+push pointer 0
+call Bat.hide 1
+pop temp 0 // void
+push argument 1 // Awidth
+pop this 2 // width
+push pointer 0
+call Bat.show 1
+pop temp 0 // void
+push constant 0
+return
+// method void Bat.move
+function Bat.move 0
+push argument 0
+pop pointer 0 // init this segment
+push this 4 // direction
+push constant 1
+eq
+not
+if-goto Bat.move$else17
+push this 0 // x
+push constant 4
+sub
+pop this 0 // x
+push this 0 // x
+push constant 0
+lt
+not
+if-goto Bat.move$ifend18
+push constant 0
+pop this 0 // x
+label Bat.move$ifend18
+push constant 0 // false
+call Screen.setColor 1
+pop temp 0 // void
+push this 0 // x
+push this 2 // width
+add
+push constant 1
+add
+push this 1 // y
+push this 0 // x
+push this 2 // width
+add
+push constant 4
+add
+push this 1 // y
+push this 3 // height
+add
+call Screen.drawRectangle 4
+pop temp 0 // void
+push constant 0 // true
+not
+call Screen.setColor 1
+pop temp 0 // void
+push this 0 // x
+push this 1 // y
+push this 0 // x
+push constant 3
+add
+push this 1 // y
+push this 3 // height
+add
+call Screen.drawRectangle 4
+pop temp 0 // void
+goto Bat.move$ifend17
+label Bat.move$else17
+push this 0 // x
+push constant 4
+add
+pop this 0 // x
+push this 0 // x
+push this 2 // width
+add
+push constant 511
+gt
+not
+if-goto Bat.move$ifend19
+push constant 511
+push this 2 // width
+sub
+pop this 0 // x
+label Bat.move$ifend19
+push constant 0 // false
+call Screen.setColor 1
+pop temp 0 // void
+push this 0 // x
+push constant 4
+sub
+push this 1 // y
+push this 0 // x
+push constant 1
+sub
+push this 1 // y
+push this 3 // height
+add
+call Screen.drawRectangle 4
+pop temp 0 // void
+push constant 0 // true
+not
+call Screen.setColor 1
+pop temp 0 // void
+push this 0 // x
+push this 2 // width
+add
+push constant 3
+sub
+push this 1 // y
+push this 0 // x
+push this 2 // width
+add
+push this 1 // y
+push this 3 // height
+add
+call Screen.drawRectangle 4
+pop temp 0 // void
+label Bat.move$ifend17
+push constant 0
+return

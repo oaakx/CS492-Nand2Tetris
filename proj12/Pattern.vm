@@ -1,0 +1,155 @@
+//
+// Draw two nice patterns
+//
+// Pattern.lines(x, y, d)
+// draws lines from the point (x,y) to all points
+// (511,0), (511,d), (511, 2d), (511, 3d) ...
+//
+// Pattern.disk(x, y, r, xstep)
+// fills a disk of radius r, centered at (x,y) with a zig-zag
+// pattern where x increases by xstep in every step
+// 
+// You can use all functions of the Jack standard library
+// (see file "Jack OS API" in projects/09)
+// 
+// in particular use Math.multiply, Math.sqrt, and
+// Screen.drawLine to draw the lines
+//
+// Pattern.lines(x, y, d)
+function Pattern.lines 1
+
+push constant 0
+pop local 0
+
+label loop
+	push local 0
+	push constant 255
+	gt
+	if-goto loopend
+	push argument 0
+	push argument 1
+	push constant 511
+	push local 0
+	call Screen.drawLine 4
+	pop temp 0
+	push local 0
+	push argument 2
+	add
+	pop local 0
+	goto loop
+label loopend
+
+return
+// Pattern.disk(x, y, r, xstep)
+// local variables: curx, cury, prevx, prevy, up
+function Pattern.disk 5
+
+push argument 0 // x
+push argument 2 // r
+sub
+pop local 2
+push argument 1 // y
+pop local 3
+
+push argument 0 // x
+push argument 2 // r
+add
+pop temp 1
+
+
+label loop
+	
+	// to hell
+
+	// curx
+	push local 2
+	push argument 3
+	add
+	pop local 0
+	
+	push local 0
+	push temp 1
+	gt
+	if-goto loopend
+
+	// cury
+	push argument 1 // y
+	push argument 2 // r
+	push argument 2 // r
+	call Math.multiply 2
+	push local 0 // curx
+	push argument 0 // x
+	sub
+	pop temp 0
+	push temp 0
+	push temp 0
+	call Math.multiply 2
+	sub
+	call Math.sqrt 1
+	sub // +-
+	// ~ push constant 255
+	pop local 1
+
+	push local 0
+	push local 1
+	push local 2
+	push local 3
+	call Screen.drawLine 4
+	pop temp 0
+
+	push local 0
+	pop local 2
+	push local 1
+	pop local 3
+
+	// and back
+
+	// curx
+	push local 2 // prevx
+	push argument 3 // xstep
+	add
+	pop local 0 // curx
+	
+	push local 0 // curx
+	push temp 1 // x+r
+	gt
+	if-goto loopend
+
+	// cury
+	push argument 1 // y
+	push argument 2 // r
+	push argument 2 // r
+	call Math.multiply 2
+	push local 0 // curx
+	push argument 0 // x
+	sub
+	pop temp 0
+	push temp 0
+	push temp 0
+	call Math.multiply 2
+	sub
+	call Math.sqrt 1
+	add // +-
+	// ~ push constant 0
+	pop local 1
+
+	// push local 1 // cury
+	// call Output.printInt 1
+	// pop temp 0
+
+	push local 0
+	push local 1
+	push local 2
+	push local 3
+	call Screen.drawLine 4
+	pop temp 0
+
+	push local 0
+	pop local 2
+	push local 1
+	pop local 3
+
+	goto loop
+label loopend
+
+return
